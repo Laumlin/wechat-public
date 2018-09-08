@@ -5,6 +5,7 @@ const config = require('./config')
 const wechat = require('./wechat/wechat')
 const API = require('./wechat/api')
 const menu = require('./wechat/menu')
+const initCreateQr = require('middlewares/initCreateQr')
 const router = require('./router')
 const app = new Koa()
 
@@ -33,6 +34,14 @@ const createMenu = async () => {
 }
 createMenu()
 
+//生成带参数二维码
+const createQr = async (ctx) => {
+  await initCreateQr('invite_award')
+  await initCreateQr('register_award')
+  await initCreateQr('share_award')
+  await initCreateQr('detail_award')
+}
+createQr()
 
 app.use(wechat(config, async (message, ctx) => {
   // TODO
