@@ -1,4 +1,5 @@
 const Koa = require('koa')
+const cors = require('koa2-cors')
 const logger = require('koa-logger')
 const bodyParser = require('koa-bodyparser')
 const config = require('./config')
@@ -11,6 +12,19 @@ const app = new Koa()
 
 app.use(logger())
 app.use(bodyParser())
+const whitelist = ['http://domain1', 'http://domain2']
+const devWhiteList = ['http://m.localhost.net.cn:3000', 'http://localhost:8000']
+function checkOriginAgainstWhitelist(ctx) {
+  // https://madole.xyz/whitelisting-multiple-domains-with-kcors-in-koa/
+  const requestOrigin = ctx.accept.headers.origin
+  if (whitelist.includes(requestOrigin) || devWhiteList.includes(requestOrigin)) {
+    return requestOrigin
+  }
+  return false
+}
+app.use(cors({
+  origin: checkOriginAgainstWhitelist
+}))
 
 const mongoose = require('mongoose')
 
