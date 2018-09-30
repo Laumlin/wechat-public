@@ -21,6 +21,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
     "mongoose": "^5.2.8",
     "raw-body": "^2.3.3",
     "xml2js": "^0.4.19"
